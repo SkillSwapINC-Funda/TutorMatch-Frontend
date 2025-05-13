@@ -13,11 +13,44 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [emailError, setEmailError] = useState<string>("");
     const toast = useRef<any>(null);
     const { signIn } = useAuth();
 
+    // Función para validar el formato del correo UPC
+    const validateEmail = (email: string): boolean => {
+        // Expresión regular para validar correos con formato U20XXXXXXX@upc.edu.pe
+        // Donde las dos primeras X son números del año (mínimo 15) y el resto pueden ser números o letras
+        const upcEmailRegex = /^[Uu]20([1-9][5-9]|[2-9][0-9])[a-zA-Z0-9]{5}@upc\.edu\.pe$/;
+        return upcEmailRegex.test(email);
+    };
+
+    // Manejar el cambio en el campo de correo con validación
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setEmail(value);
+        
+        if (value && !validateEmail(value)) {
+            setEmailError('El correo debe tener formato U20XXXXXXX@upc.edu.pe');
+        } else {
+            setEmailError('');
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
+        // Validar el formato del correo antes de intentar iniciar sesión
+        if (!validateEmail(email)) {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Correo no válido',
+                detail: 'Debes usar un correo institucional UPC con formato U20XXXXXXX@upc.edu.pe',
+                life: 3000
+            });
+            return;
+        }
+        
         setLoading(true);
 
         try {
@@ -87,9 +120,14 @@ export default function LoginPage() {
                                     placeholder="U20XXXXXXX@upc.edu.pe"
                                     required
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-dark-light text-light border border-dark-border px-3 py-3 rounded-md"
+                                    onChange={handleEmailChange}
+                                    className={`w-full bg-dark-light text-light border ${
+                                        emailError ? 'border-red-500' : 'border-dark-border'
+                                    } px-3 py-3 rounded-md`}
                                 />
+                                {emailError && (
+                                    <small className="text-red-500">{emailError}</small>
+                                )}
                             </div>
 
                             <div className="space-y-2">

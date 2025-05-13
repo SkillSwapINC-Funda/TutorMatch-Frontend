@@ -20,6 +20,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const { signUp } = useAuth();
+  const [emailError, setEmailError] = useState<string>('');
 
   // Estado del formulario ajustado según el tipo User
   const [formData, setFormData] = useState({
@@ -38,8 +39,26 @@ export default function RegisterPage() {
     avatar: ""
   });
 
+  // Añade esta función de validación debajo de tus otros manejadores de eventos
+  const validateEmail = (email: string): boolean => {
+    // Expresión regular para validar correos con formato U20XXXXXXX@upc.edu.pe
+    // Donde las dos primeras X son números del año (mínimo 15) y el resto pueden ser números o letras
+    const upcEmailRegex = /^[Uu]20([1-9][5-9]|[2-9][0-9])[a-zA-Z0-9]{5}@upc\.edu\.pe$/;
+    return upcEmailRegex.test(email);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // Validación en tiempo real para el campo de email
+    if (name === 'email' && value) {
+      if (!validateEmail(value)) {
+        setEmailError('El correo debe tener formato U20XXXXXXX@upc.edu.pe');
+      } else {
+        setEmailError('');
+      }
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -62,7 +81,8 @@ export default function RegisterPage() {
 
   const handleSubmitStep1 = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validación básica antes de pasar al paso 2
+
+    // Validación básica
     if (!formData.email || !formData.password) {
       toast.current.show({
         severity: 'error',
@@ -72,6 +92,18 @@ export default function RegisterPage() {
       });
       return;
     }
+
+    // Validación del correo institucional UPC
+    if (!validateEmail(formData.email)) {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Correo no válido',
+        detail: 'Debes usar un correo institucional UPC con formato U20XXXXXXX@upc.edu.pe',
+        life: 3000
+      });
+      return;
+    }
+
     setStep(2);
   };
 
@@ -224,8 +256,13 @@ export default function RegisterPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-dark-light text-light border border-dark-border px-3 py-2 rounded-md"
+                    className={`w-full bg-dark-light text-light border ${
+                      emailError ? 'border-red-500' : 'border-dark-border'
+                    } px-3 py-2 rounded-md`}
                   />
+                  {emailError && (
+                    <small className="text-red-500">{emailError}</small>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="password" className="text-light">Contraseña</label>
