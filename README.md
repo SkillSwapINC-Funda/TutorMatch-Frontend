@@ -48,7 +48,7 @@ TutorMatch es una plataforma que conecta estudiantes con tutores académicos cal
 ## Estructura del Proyecto
 
 El proyecto está organizado en módulos funcionales:
-- `user/`: Gestión de usuarios, perfiles y autenticación
+- `user/`: Gestión de usuarios, perfiles y autenticación.
 - `tutoring/`: Funcionalidades de gestión de tutorías
 - `course/`: Cursos y semestres académicos
 - `dashboard/`: Interfaz principal del usuario
