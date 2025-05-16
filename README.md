@@ -1,6 +1,4 @@
-Aquí tienes tu contenido convertido en un **Markdown profesional y optimizado para Odigo** (compatible con su sistema de copy y presentación):
 
-````markdown
 # 📘 TutorMatch – Plataforma de Tutorías Académicas
 
 ## 📌 Descripción del Proyecto
