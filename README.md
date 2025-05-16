@@ -39,10 +39,10 @@ Presentamos sus características clave, tecnologías utilizadas, guía de instal
 ## ⚙️ Instalación y Configuración
 
 1. **Clona el repositorio**
-   ```bash
+   
    git clone https://github.com/SkillSwapINC-Funda/TutorMatch-Frontend
    cd TutorMatch-Frontend
-````
+
 
 2. **Instala las dependencias**
 
@@ -108,4 +108,4 @@ Para consultas o soporte técnico:
 * ✉️ Correo: [rlopezhuaman321@gmail.com](mailto:rlopezhuaman321@gmail.com)
 * 🕘 Horario de atención: Lunes a Viernes, 9:00 a.m. – 6:00 p.m.
 
-```
+
