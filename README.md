@@ -38,7 +38,7 @@ TutorMatch es una plataforma que conecta estudiantes con tutores académicos cal
 
 3. **Configurar variables de entorno**
    - Crea un archivo `.env.local` basado en `.env.example`
-   - Configura las variables necesarias para la conexión con el backend
+   - Configura las variables necesarias para la conexión con el Backend
 
 4. **Iniciar servidor de desarrollo**
    ```bash
