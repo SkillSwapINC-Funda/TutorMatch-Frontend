@@ -109,6 +109,3 @@ Para consultas o soporte técnico:
 * 🕘 Horario de atención: Lunes a Viernes, 9:00 a.m. – 6:00 p.m.
 
 ```
-
-¿Deseas que lo convierta también a un archivo `.md` descargable?
-```
